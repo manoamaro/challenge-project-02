@@ -8,4 +8,5 @@ class User < ApplicationRecord
    validates :last_name, presence: true
 
    has_many :contacts
+   has_many :custom_fields
 end
