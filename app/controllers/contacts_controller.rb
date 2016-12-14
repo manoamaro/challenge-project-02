@@ -16,10 +16,16 @@ class ContactsController < ApplicationController
   # GET /contacts/new
   def new
     @contact = Contact.new
+    @contact.custom_field_values
+            .build(current_user.custom_fields.map { |cf| { custom_field: cf } })
   end
 
   # GET /contacts/1/edit
   def edit
+    @contact&.custom_field_values
+            &.build(current_user.custom_fields
+              .where.not(id: @contact.custom_field_values.select(:custom_field_id))
+              .map { |cf| { custom_field: cf } })
   end
 
   # POST /contacts
@@ -72,6 +78,8 @@ class ContactsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def contact_params
-      params.require(:contact).permit(:first_name, :last_name, :email)
+      params.require(:contact).permit(:first_name,
+                                      :last_name, :email,
+                                      custom_field_values_attributes: [:id, :value, :custom_field_id])
     end
 end

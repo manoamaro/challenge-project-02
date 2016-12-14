@@ -15,5 +15,12 @@
   <%= @contact.email %>
 </p>
 
+<% @contact.custom_field_values.each do |cfv| %>
+  <p>
+    <strong><%= cfv.custom_field.title %>:</strong>
+    <%= cfv.value %>
+  </p>
+<% end %>
+
 <%= link_to 'Edit', edit_contact_path(@contact) %> |
 <%= link_to 'Back', contacts_path %>

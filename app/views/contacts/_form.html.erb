@@ -26,6 +26,15 @@
     <%= f.text_field :email %>
   </div>
 
+  <%= f.fields_for :custom_field_values do |cfvf| %>
+    <div class="field">
+      <%= cfvf.label :value, cfvf.object.custom_field.title %>
+      <%= cfvf.text_field :value %>
+
+      <%= cfvf.hidden_field :custom_field_id %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

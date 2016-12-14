@@ -62,6 +62,16 @@ RSpec.describe ContactsController, type: :controller do
       get :new, params: {}, session: valid_session
       expect(assigns(:contact)).to be_a_new(Contact)
     end
+
+    it "assigns custom field values to @contact" do
+
+      custom_field_01 = create(:custom_field, user: @user)
+      custom_field_02 = create(:custom_field, user: @user)
+
+      get :new, params: {}, session: valid_session
+      expect(assigns(:contact).custom_field_values.size).to eq(2)
+    end
+
   end
 
   describe "GET #edit" do
